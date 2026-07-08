@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskFlow 项目学习指南</title>
+<style>
+  :root { --primary:#3B82F6; --success:#22C55E; --warning:#F59E0B; --danger:#EF4444; --bg:#F9FAFB; --card:#FFFFFF; --text:#1F2937; --text2:#6B7280; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, 'Segoe UI', 'Noto Sans SC', sans-serif; background:var(--bg); color:var(--text); line-height:1.8; }
+  .container { max-width:960px; margin:0 auto; padding:20px 24px 60px; }
+  h1 { font-size:2em; margin:40px 0 8px; color:var(--primary); border-bottom:3px solid var(--primary); padding-bottom:8px; }
+  h2 { font-size:1.6em; margin:36px 0 12px; color:var(--text); }
+  h3 { font-size:1.25em; margin:24px 0 8px; color:var(--text); }
+  p, li { font-size:15px; }
+  a { color:var(--primary); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  code { background:#F3F4F6; padding:2px 6px; border-radius:4px; font-size:13.5px; font-family:'Fira Code',Consolas,monospace; }
+  pre { background:#1E293B; color:#E2E8F0; padding:16px 20px; border-radius:10px; overflow-x:auto; margin:12px 0 16px; font-size:13px; line-height:1.6; }
+  pre code { background:none; padding:0; color:inherit; }
+  table { width:100%; border-collapse:collapse; margin:12px 0 16px; font-size:14px; }
+  th { background:#EEF2FF; padding:10px 12px; text-align:left; border:1px solid #C7D2FE; font-weight:600; }
+  td { padding:9px 12px; border:1px solid #E5E7EB; }
+  tr:nth-child(even) td { background:#F9FAFB; }
+  .tip { padding:16px 20px; border-radius:10px; margin:14px 0; font-size:14.5px; }
+  .tip-blue { background:#EBF5FF; border-left:4px solid var(--primary); }
+  .tip-green { background:#F0FDF4; border-left:4px solid var(--success); }
+  .tip-orange { background:#FFF7ED; border-left:4px solid #F97316; }
+  .tip-purple { background:#F5F3FF; border-left:4px solid #8B5CF6; }
+  .tip-red { background:#FEF2F2; border-left:4px solid var(--danger); }
+  .tip-yellow { background:#FFFBEB; border-left:4px solid #D97706; }
+  .tip-cyan { background:#F0F9FF; border-left:4px solid #0EA5E9; }
+  .badge { display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px; font-weight:600; margin-right:4px; }
+  .badge-blue { background:#DBEAFE; color:#1E40AF; }
+  .badge-green { background:#DCFCE7; color:#166534; }
+  .badge-orange { background:#FEF3C7; color:#92400E; }
+  .badge-red { background:#FEE2E2; color:#991B1B; }
+  .arch-box { background:var(--card); border:2px solid #E5E7EB; border-radius:12px; padding:20px; margin:16px 0; }
+  .arch-box .layer { padding:12px 16px; border-radius:8px; margin:8px 0; }
+  .flow-step { display:flex; gap:12px; align-items:flex-start; margin:8px 0; }
+  .flow-step .num { min-width:32px; height:32px; background:var(--primary); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; }
+  .flow-step .content { flex:1; }
+  .toc { background:var(--card); border:1px solid #E5E7EB; border-radius:12px; padding:20px 28px; margin:20px 0; }
+  .toc a { display:block; padding:4px 0; }
+  .toc a:hover { background:#F3F4F6; margin:0 -12px; padding:4px 12px; border-radius:6px; text-decoration:none; }
+  .highlight-box { background:linear-gradient(135deg,#EEF2FF,#F0F9FF); border:2px solid var(--primary); border-radius:14px; padding:24px; margin:20px 0; }
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  .card { background:var(--card); border:1px solid #E5E7EB; border-radius:10px; padding:16px; }
+  .card h4 { margin-bottom:6px; }
+  .card p { font-size:13.5px; color:var(--text2); }
+  .ascii-diagram { background:#1E293B; color:#A5F3FC; padding:16px 20px; border-radius:10px; font-family:Consolas,'Courier New',monospace; font-size:13px; line-height:1.5; overflow-x:auto; white-space:pre; margin:12px 0; }
+  .checklist { list-style:none; }
+  .checklist li { padding:6px 0; font-size:14.5px; }
+  .checklist li::before { content:'☐ '; color:var(--primary); font-weight:700; }
+  hr { border:none; border-top:1px solid #E5E7EB; margin:32px 0; }
+  .subtitle { color:var(--text2); font-size:15px; margin-bottom:20px; }
+  @media (max-width:768px) { .grid-2,.grid-3 { grid-template-columns:1fr; } .container { padding:12px 16px; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>📘 TaskFlow 项目学习指南</h1>
+<p class="subtitle">从零理解全栈 Web 开发 · 适合小白的图文解析 · 方便下次复用</p>
+
+<div class="toc">
+  <strong>📑 目录</strong>
+  <a href="#s1">1. 项目全局概览</a>
+  <a href="#s2">2. 技术栈全景图</a>
+  <a href="#s3">3. 前端技术栈详解</a>
+  <a href="#s4">4. 后端技术栈详解</a>
+  <a href="#s5">5. 项目架构与分层设计</a>
+  <a href="#s6">6. 数据流转全过程</a>
+  <a href="#s7">7. 数据库设计思路</a>
+  <a href="#s8">8. 核心技术概念图解</a>
+  <a href="#s9">9. 项目特色与亮点总结</a>
+  <a href="#s10">10. 复用指南：下次开发类似项目</a>
+</div>
+
+<hr>
+
+<!-- ====== 第1节 ====== -->
+<h2 id="s1">1. 项目全局概览</h2>
+
+<h3>1.1 这个项目做什么？</h3>
+<p>TaskFlow 是一个<strong>个人任务管理系统</strong>，核心功能包括：</p>
+<ul>
+  <li>创建、编辑、删除任务</li>
+  <li>任务状态流转（待办 → 进行中 → 已完成）</li>
+  <li>分类管理、优先级设置、截止日期提醒</li>
+  <li>数据统计可视化面板</li>
+</ul>
+
+<div class="tip tip-blue">
+  <strong>🧑‍💻 一句话理解：</strong>它就像你电脑上的私人小秘书，帮你记住每天要做什么、做了什么、还剩多少没做。
+</div>
+
+<h3>1.2 技术一句话总结</h3>
+<div class="ascii-diagram">前端：React + TypeScript + Vite + Tailwind CSS + Recharts
+后端：Node.js + Express + TypeScript + Zod
+数据库：SQLite（通过 better-sqlite3）
+工程化：Monorepo + concurrently</div>
+
+<hr>
+
+<!-- ====== 第2节 ====== -->
+<h2 id="s2">2. 技术栈全景图</h2>
+
+<table>
+  <tr><th>层级</th><th>技术</th><th>角色</th><th>选型理由</th></tr>
+  <tr><td rowspan="9"><strong>前端</strong></td><td>React 18</td><td>UI 构建</td><td>生态最成熟、组件化、资料多</td></tr>
+  <tr><td>TypeScript</td><td>类型安全</td><td>编译期发现错误</td></tr>
+  <tr><td>Vite</td><td>构建工具</td><td>极速启动、原生 ESM</td></tr>
+  <tr><td>Tailwind CSS 3</td><td>原子化样式</td><td>无需写 CSS 文件</td></tr>
+  <tr><td>React Router 7</td><td>页面路由</td><td>SPA 标配</td></tr>
+  <tr><td>Axios</td><td>HTTP 客户端</td><td>拦截器、自动 JSON</td></tr>
+  <tr><td>Recharts</td><td>图表可视化</td><td>React 原生组件</td></tr>
+  <tr><td>dayjs</td><td>日期处理</td><td>仅 2KB，API 友好</td></tr>
+  <tr><td>Headless UI</td><td>无障碍组件</td><td>提供逻辑，样式自控</td></tr>
+  <tr><td rowspan="4"><strong>后端</strong></td><td>Express 5</td><td>HTTP 框架</td><td>Node.js 最流行 Web 框架</td></tr>
+  <tr><td>TypeScript</td><td>类型安全</td><td>前后端统一语言</td></tr>
+  <tr><td>Zod</td><td>参数校验</td><td>类型推导强，与 TS 深度集成</td></tr>
+  <tr><td>better-sqlite3</td><td>数据库驱动</td><td>同步 API、性能好</td></tr>
+  <tr><td><strong>数据库</strong></td><td>SQLite</td><td>数据持久化</td><td>零配置、文件级、标准 SQL</td></tr>
+  <tr><td rowspan="3"><strong>工程化</strong></td><td>tsx</td><td>TS 运行器</td><td>无需预编译、支持 watch</td></tr>
+  <tr><td>concurrently</td><td>并发启动</td><td>一条命令启动前后端</td></tr>
+  <tr><td>cors</td><td>跨域中间件</td><td>前后端分离开发必备</td></tr>
+</table>
+
+<hr>
+
+<!-- ====== 第3节 ====== -->
+<h2 id="s3">3. 前端技术栈详解</h2>
+
+<h3>3.1 React — 组件化 UI 的基石</h3>
+<div class="tip tip-blue">
+  <strong>🧩 什么是 React？</strong><br>
+  React 把页面拆成一个个"积木块"（组件），然后像搭积木一样组合。<br>
+  <strong>类比：</strong>玩乐高——一个按钮 = 一块积木，一个卡片 = 几块积木，整个页面 = 所有积木的组合。
+</div>
+
+<p><strong>TaskFlow 组件树：</strong></p>
+<div class="ascii-diagram">App（根组件）
+├── ErrorBoundary（错误兜底）
+├── BrowserRouter（路由管理）
+└── ToastProvider（全局提示）
+    └── Layout（页面布局）
+        ├── Header（顶部导航）
+        ├── Sidebar（侧边栏）
+        ├── TaskPage（任务页）
+        │   ├── TaskFilters（筛选栏）
+        │   ├── TaskList → TaskItem（任务列表 → 单项）
+        │   ├── TaskForm（表单）
+        │   └── TaskEmpty（空状态）
+        └── StatsPage（统计页）
+            ├── StatsOverview（数字卡片）
+            ├── StatusChart（状态图）
+            └── CategoryChart（分类图）</div>
+
+<div class="grid-3" style="margin:16px 0">
+  <div class="card"><h4>组件 Component</h4><p>页面的一个"零件"，如 TaskItem</p></div>
+  <div class="card"><h4>Props</h4><p>父传给子的"参数"，如 task 数据</p></div>
+  <div class="card"><h4>State</h4><p>组件自己的"记忆"，如模态框开关</p></div>
+  <div class="card"><h4>Hook</h4><p>复用逻辑的工具，如 useTasks()</p></div>
+  <div class="card"><h4>JSX</h4><p>在 JS 中写类 HTML 语法</p></div>
+  <div class="card"><h4>useEffect</h4><p>组件加载/更新时执行副作用</p></div>
+</div>
+
+<h3>3.2 TypeScript — 给 JS 加"安全检查"</h3>
+<div class="tip tip-orange">
+  <strong>🛡️ 为什么用 TypeScript？</strong><br>
+  JavaScript 太自由——把字符串传给期望数字的函数，运行时才报错。<br>
+  TypeScript 就像<strong>作文的"语法检查器"</strong>，写代码时就能告诉你"类型不对"！<br>
+  <strong>类比：</strong>JS = 纸上随便写；TS = 表格里按格式填，填错格子变红。
+</div>
+
+<h3>3.3 Vite — 闪电般的开发体验</h3>
+<div class="tip tip-green">
+  <strong>⚡ Vite 为什么快？</strong><br>
+  传统工具启动时把所有文件打包才能开发。Vite 利用浏览器原生 ES Module，只编译当前需要的文件。<br>
+  <strong>类比：</strong>Webpack = 先装修整个厨房再煎蛋；Vite = 直接拿锅煎蛋。
+</div>
+
+<h3>3.4 Tailwind CSS — 不写 CSS 的样式方案</h3>
+<div class="tip tip-purple">
+  <strong>🎨 Tailwind 核心理念</strong><br>
+  传统：写 <code>.card</code> 类名，在 CSS 文件写规则。<br>
+  Tailwind：直接在标签上写"工具类名"，每个类名 = 一个具体样式。<br>
+  <strong>类比：</strong>传统 CSS = 去裁缝定制；Tailwind = 用标准"零件"自己拼。
+</div>
+
+<pre><code>&lt;!-- 传统方式 --&gt;
+&lt;div class="card"&gt;...&lt;/div&gt;
+
+&lt;!-- Tailwind 方式（本项目实际用法） --&gt;
+&lt;div class="bg-white rounded-lg p-4 shadow-sm"&gt;...&lt;/div&gt;</code></pre>
+
+<hr>
+
+<!-- ====== 第4节 ====== -->
+<h2 id="s4">4. 后端技术栈详解</h2>
+
+<h3>4.1 Express — Node.js 的"高速公路"</h3>
+<div class="tip tip-red">
+  <strong>🚀 Express 是什么？</strong><br>
+  Node.js 最流行的 Web 框架，帮你处理 HTTP 请求的收发。<br>
+  <strong>类比：</strong>Node.js = 发动机；Express = 把发动机装进汽车，加上方向盘、刹车；你的代码 = 决定车往哪开。
+</div>
+
+<h3>4.2 后端四层架构</h3>
+<div class="tip tip-cyan">
+  <strong>🏗️ 为什么要分层？</strong><br>
+  像餐厅分工一样：服务员（Route）接待 → 传菜员（Controller）传单 → 厨师（Service）做菜 → 仓库（Database）提供食材。
+</div>
+
+<div class="arch-box">
+  <div class="layer" style="background:#DBEAFE"><strong>🔀 Route（路由）</strong> — 定义 URL 和 Controller 的映射<br><code>GET /api/tasks → taskController.getAll</code></div>
+  <div class="layer" style="background:#DCFCE7"><strong>📋 Controller（控制器）</strong> — 解析参数 → 调 Service → 返回响应<br>不写业务逻辑，不操作数据库</div>
+  <div class="layer" style="background:#FEF3C7"><strong>⚙️ Service（服务层）</strong> — 核心业务逻辑 + 数据库操作<br>不关心 HTTP 请求/响应</div>
+  <div class="layer" style="background:#FEE2E2"><strong>💾 Database（数据库）</strong> — 数据存储和查询<br>SQLite + better-sqlite3</div>
+</div>
+
+<h3>4.3 Zod — 请求参数的"安检门"</h3>
+<div class="tip tip-yellow">
+  <strong>🔍 Zod 做什么？</strong><br>
+  用户发请求时，Zod 先检查数据"合不合法"，不合法就拒绝。<br>
+  <strong>类比：</strong>机场安检——超大行李 → 拒绝登机 = 标题为空 → 返回 400 错误。
+</div>
+
+<h3>4.4 统一错误处理体系</h3>
+<div class="ascii-diagram">自定义错误类继承关系：
+
+AppError（基类，通用错误）
+├── NotFoundError    → 404 资源不存在
+├── ValidationError  → 400 参数不合法
+└── ConflictError    → 409 资源冲突（如分类名重复）
+
+错误处理流程：
+代码抛出错误 → Controller catch → next(error) → errorHandler → 统一格式响应</div>
+
+<hr>
+
+<!-- ====== 第5节 ====== -->
+<h2 id="s5">5. 项目架构与分层设计</h2>
+
+<h3>5.1 Monorepo 项目结构</h3>
+<div class="ascii-diagram">taskflow/                    ← 项目根目录
+├── client/                  ← 前端 React 应用
+│   ├── src/
+│   │   ├── api/             ← API 调用封装
+│   │   ├── components/      ← UI 组件（按模块分组）
+│   │   ├── hooks/           ← 自定义 Hooks
+│   │   ├── pages/           ← 页面组件
+│   │   ├── types/           ← 类型定义
+│   │   └── utils/           ← 工具函数
+│   ├── tailwind.config.js
+│   └── vite.config.ts
+├── server/                  ← 后端 Express 应用
+│   ├── src/
+│   │   ├── config/          ← 数据库配置
+│   │   ├── controllers/     ← 控制器
+│   │   ├── middleware/       ← 中间件
+│   │   ├── routes/          ← 路由
+│   │   ├── schemas/         ← Zod 校验规则
+│   │   ├── services/        ← 服务层
+│   │   ├── types/           ← 类型定义
+│   │   └── utils/           ← 工具函数
+│   └── data/taskflow.db     ← SQLite 数据库
+└── docs/                    ← 项目文档</div>
+
+<h3>5.2 前后端通信架构</h3>
+<div class="ascii-diagram">┌─────────────────────┐         ┌──────────────────────┐
+│   前端 (Vite:5173)   │         │  后端 (Express:3001)  │
+│                      │  HTTP   │                       │
+│  组件 → useTasks     │  ────→  │  Route → Controller   │
+│        → taskApi     │         │        → Service      │
+│        (axios)       │  ←────  │        → SQLite       │
+│                      │         │                       │
+│  Vite proxy: /api    │         │                       │
+│  → localhost:3001    │         │                       │
+└─────────────────────┘         └──────────────────────┘</div>
+
+<hr>
+
+<!-- ====== 第6节 ====== -->
+<h2 id="s6">6. 数据流转全过程</h2>
+
+<h3>6.1 "创建任务"完整数据流</h3>
+<div class="highlight-box">
+
+<div class="flow-step"><div class="num">1</div><div class="content"><strong>用户填写表单</strong><br>在 TaskForm 中输入标题、选择优先级 <span class="badge badge-blue">React useState</span></div></div>
+<div class="flow-step"><div class="num">2</div><div class="content"><strong>点击"创建"按钮</strong><br>触发 handleSubmit 函数 <span class="badge badge-blue">React 事件</span></div></div>
+<div class="flow-step"><div class="num">3</div><div class="content"><strong>前端校验</strong><br>标题不能为空等 <span class="badge badge-blue">表单校验</span></div></div>
+<div class="flow-step"><div class="num">4</div><div class="content"><strong>调用 Hook 方法</strong><br>useTasks().createTask(data) <span class="badge badge-blue">自定义 Hook</span></div></div>
+<div class="flow-step"><div class="num">5</div><div class="content"><strong>发送 HTTP 请求</strong><br>POST /api/tasks <span class="badge badge-green">Axios + Vite Proxy</span></div></div>
+<div class="flow-step"><div class="num">6</div><div class="content"><strong>后端路由匹配</strong><br>找到对应的 Controller <span class="badge badge-orange">Express Route</span></div></div>
+<div class="flow-step"><div class="num">7</div><div class="content"><strong>Zod 参数校验</strong><br>validate 中间件检查数据合法性 <span class="badge badge-orange">Zod</span></div></div>
+<div class="flow-step"><div class="num">8</div><div class="content"><strong>Service 执行业务逻辑</strong><br>构建 SQL，插入数据 <span class="badge badge-red">Service + SQLite</span></div></div>
+<div class="flow-step"><div class="num">9</div><div class="content"><strong>返回统一格式响应</strong><br><code>{ success: true, data: {...} }</code> <span class="badge badge-green">successResponse()</span></div></div>
+<div class="flow-step"><div class="num">10</div><div class="content"><strong>前端接收响应</strong><br>Axios 拦截器自动解包 <span class="badge badge-blue">Interceptor</span></div></div>
+<div class="flow-step"><div class="num">11</div><div class="content"><strong>UI 自动更新</strong><br>刷新任务列表，新任务出现 <span class="badge badge-blue">React 重渲染</span></div></div>
+<div class="flow-step"><div class="num">12</div><div class="content"><strong>Toast 提示</strong><br>"创建成功" 弹出 <span class="badge badge-green">Toast 组件</span></div></div>
+
+</div>
+
+<h3>6.2 数据流方向总结</h3>
+<div class="ascii-diagram">用户操作 → React 事件 → Hook 方法 → API 函数 → Axios 请求
+                                                    ↓
+用户看到 ← React 渲染 ← 状态更新 ← API 响应 ← Express 处理</div>
+
+<hr>
+
+<!-- ====== 第7节 ====== -->
+<h2 id="s7">7. 数据库设计思路</h2>
+
+<h3>7.1 为什么选 SQLite？</h3>
+<table>
+  <tr><th>维度</th><th>SQLite ✅</th><th>MySQL</th><th>MongoDB</th></tr>
+  <tr><td>安装</td><td><strong>无需安装</strong></td><td>需要安装服务</td><td>需要安装服务</td></tr>
+  <tr><td>配置</td><td><strong>零配置</strong></td><td>建库建用户</td><td>配置连接</td></tr>
+  <tr><td>存储</td><td><strong>单个文件</strong></td><td>服务端</td><td>服务端</td></tr>
+  <tr><td>学习成本</td><td><strong>标准 SQL</strong></td><td>标准 SQL</td><td>新概念</td></tr>
+  <tr><td>适合场景</td><td><strong>个人/小型</strong></td><td>中大型</td><td>大数据/灵活结构</td></tr>
+</table>
+
+<h3>7.2 ER 关系图</h3>
+<div class="ascii-diagram">┌──────────────────┐  1 : N  ┌──────────────────────┐
+│   categories     │─────────│       tasks           │
+│   （分类表）      │         │      （任务表）        │
+├──────────────────┤         ├──────────────────────┤
+│ id      (PK)     │         │ id          (PK)      │
+│ name    (名称)   │         │ title       (标题)    │
+│ is_builtin(预置) │         │ description (描述)    │
+│ created_at       │         │ status      (状态)    │
+└──────────────────┘         │ priority    (优先级)  │
+                             │ category_id (FK) ───→ categories.id
+预置：默认/工作/学习/生活      │ due_date    (截止日)  │
+                             │ sort_order  (排序)    │
+                             │ created_at / updated_at│
+                             └──────────────────────┘</div>
+
+<h3>7.3 设计原则</h3>
+<table>
+  <tr><th>决策</th><th>原因</th></tr>
+  <tr><td>分类表独立</td><td>可复用到多个任务，避免冗余</td></tr>
+  <tr><td>外键约束</td><td>保证数据一致性</td></tr>
+  <tr><td>ON DELETE SET DEFAULT</td><td>删分类时任务归入"默认"</td></tr>
+  <tr><td>CHECK 约束</td><td>数据库层面确保枚举值合法</td></tr>
+  <tr><td>is_builtin 字段</td><td>保护预置分类不被删除</td></tr>
+</table>
+
+<hr>
+
+<!-- ====== 第8节 ====== -->
+<h2 id="s8">8. 核心技术概念图解</h2>
+
+<h3>8.1 自定义 Hook 模式</h3>
+<div class="tip tip-blue">
+  <strong>🪝 什么是自定义 Hook？</strong><br>
+  把"数据获取 + 状态管理 + 操作方法"打包成可复用的工具函数。<br>
+  <strong>类比：</strong>智能工具箱——你说"获取任务列表"，它帮你拿数据、存好、告诉你状态。
+</div>
+
+<pre><code>// useTasks Hook 返回的"工具箱"
+const {
+  tasks,           // 📦 任务列表数据
+  loading,         // ⏳ 是否加载中
+  fetchTasks,      // 🔍 获取（带筛选条件）
+  refreshTasks,    // 🔄 刷新列表
+  createTask,      // ➕ 创建任务
+  updateTask,      // ✏️ 更新任务
+  deleteTask,      // 🗑️ 删除任务
+  toggleStatus,    // 🔀 一键切换状态
+  reorderTasks,    // ↕️ 拖拽排序
+} = useTasks();</code></pre>
+
+<h3>8.2 乐观更新模式</h3>
+<div class="tip tip-yellow">
+  <strong>⚡ 乐观更新</strong><br>
+  <strong>普通更新：</strong>发请求 → 等成功 → 更新 UI（慢）<br>
+  <strong>乐观更新：</strong>先更新 UI → 发请求 → 失败再撤回（流畅）<br>
+  TaskFlow 在拖拽排序时使用了这种模式。
+</div>
+
+<h3>8.3 搜索防抖模式</h3>
+<div class="ascii-diagram">用户快速输入: "学" → "学习" → "学习T" → "学习TS"
+
+不用防抖: 发送 4 次请求 ❌
+用防抖:   停止输入 300ms 后只发 1 次 ✅</div>
+
+<h3>8.4 错误边界模式</h3>
+<div class="ascii-diagram">App
+└── ErrorBoundary（错误边界）← 子组件崩溃时显示友好提示
+    └── BrowserRouter
+        └── ToastProvider
+            └── 所有页面和组件
+
+ErrorBoundary 像"保险丝"——某个组件出问题时，不会白屏。</div>
+
+<hr>
+
+<!-- ====== 第9节 ====== -->
+<h2 id="s9">9. 项目特色与亮点总结</h2>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>🏗️ 架构设计</h4>
+    <ul>
+      <li>前后端同 TypeScript</li>
+      <li>四层后端架构（Route→Controller→Service→DB）</li>
+      <li>统一响应/错误格式</li>
+      <li>自定义错误类继承体系</li>
+      <li>Zod 前置参数校验</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>⚙️ 工程化</h4>
+    <ul>
+      <li>Monorepo 结构</li>
+      <li>concurrently 一键启动</li>
+      <li>Vite 代理零配置跨域</li>
+      <li>tsx watch 后端热重启</li>
+      <li>ESLint + Prettier 代码规范</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>🎨 用户体验</h4>
+    <ul>
+      <li>乐观更新（拖拽排序即时响应）</li>
+      <li>搜索 300ms 防抖</li>
+      <li>截止日期视觉提醒（橙色/红色）</li>
+      <li>删除二次确认</li>
+      <li>Toast 全局提示 + 空状态引导</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>🛡️ 安全与质量</h4>
+    <ul>
+      <li>strict TypeScript 模式</li>
+      <li>参数化 SQL 查询（防注入）</li>
+      <li>幂等数据库初始化</li>
+      <li>ErrorBoundary 错误边界</li>
+      <li>Axios 统一错误拦截</li>
+    </ul>
+  </div>
+</div>
+
+<hr>
+
+<!-- ====== 第10节 ====== -->
+<h2 id="s10">10. 复用指南：下次开发类似项目</h2>
+
+<h3>10.1 启动检查清单</h3>
+<ul class="checklist">
+  <li><strong>需求分析</strong> — 确定核心功能，画线框图</li>
+  <li><strong>技术选型</strong> — React + TS + Vite + Tailwind / Express + TS + Zod</li>
+  <li><strong>项目初始化</strong> — Monorepo + strict TS + ESLint + Vite 代理</li>
+  <li><strong>数据库设计</strong> — 画 ER 图 → 定义表结构 → 幂等初始化代码</li>
+  <li><strong>后端开发</strong> — 类型 → Schema → Service → Controller → Route</li>
+  <li><strong>前端开发</strong> — 类型 → API 封装 → Hook → 组件 → 页面</li>
+  <li><strong>联调优化</strong> — 前后端联调 → 响应式 → 错误处理</li>
+</ul>
+
+<h3>10.2 可直接复用的代码模式</h3>
+<table>
+  <tr><th>模式</th><th>文件</th><th>复用度</th></tr>
+  <tr><td>统一响应格式</td><td><code>utils/response.ts</code></td><td>⭐⭐⭐⭐⭐</td></tr>
+  <tr><td>错误类体系</td><td><code>utils/errors.ts</code></td><td>⭐⭐⭐⭐⭐</td></tr>
+  <tr><td>全局错误处理</td><td><code>middleware/errorHandler.ts</code></td><td>⭐⭐⭐⭐⭐</td></tr>
+  <tr><td>Zod 校验中间件</td><td><code>middleware/validate.ts</code></td><td>⭐⭐⭐⭐⭐</td></tr>
+  <tr><td>Axios 封装</td><td><code>api/client.ts</code></td><td>⭐⭐⭐⭐⭐</td></tr>
+  <tr><td>Hook 模式模板</td><td><code>hooks/useTasks.ts</code></td><td>⭐⭐⭐⭐</td></tr>
+  <tr><td>通用 UI 组件</td><td><code>components/common/</code></td><td>⭐⭐⭐⭐</td></tr>
+  <tr><td>Tailwind 色彩</td><td><code>tailwind.config.js</code></td><td>⭐⭐⭐⭐</td></tr>
+</table>
+
+<h3>10.3 扩展方向</h3>
+<table>
+  <tr><th>功能</th><th>技术</th><th>难度</th></tr>
+  <tr><td>用户注册/登录</td><td>JWT + 密码加密</td><td>⭐⭐⭐</td></tr>
+  <tr><td>数据导出</td><td>后端生成文件 + 前端下载</td><td>⭐⭐</td></tr>
+  <tr><td>任务标签</td><td>多对多关系表 + 标签 UI</td><td>⭐⭐</td></tr>
+  <tr><td>拖拽看板</td><td>dnd-kit</td><td>⭐⭐⭐</td></tr>
+  <tr><td>深色模式</td><td>Tailwind dark: 前缀</td><td>⭐</td></tr>
+  <tr><td>国际化</td><td>react-i18next</td><td>⭐⭐</td></tr>
+  <tr><td>单元测试</td><td>Vitest / Jest</td><td>⭐⭐</td></tr>
+  <tr><td>CI/CD</td><td>GitHub Actions + Docker</td><td>⭐⭐⭐</td></tr>
+</table>
+
+<hr>
+
+<h2>附录：术语速查表</h2>
+<table>
+  <tr><th>术语</th><th>全称</th><th>通俗解释</th></tr>
+  <tr><td><strong>CRUD</strong></td><td>Create/Read/Update/Delete</td><td>增删改查，数据操作的四种基本动作</td></tr>
+  <tr><td><strong>API</strong></td><td>Application Programming Interface</td><td>前后端通信的"接口"，像餐厅的菜单</td></tr>
+  <tr><td><strong>REST</strong></td><td>Representational State Transfer</td><td>一种 API 设计风格</td></tr>
+  <tr><td><strong>SPA</strong></td><td>Single Page Application</td><td>单页应用，不刷新切换内容</td></tr>
+  <tr><td><strong>ESM</strong></td><td>ES Modules</td><td>JS 模块化标准（import/export）</td></tr>
+  <tr><td><strong>Monorepo</strong></td><td>单一代码仓库</td><td>前后端放在同一个 Git 仓库</td></tr>
+  <tr><td><strong>防抖</strong></td><td>Debounce</td><td>一定时间内只执行最后一次操作</td></tr>
+  <tr><td><strong>乐观更新</strong></td><td>Optimistic Update</td><td>先更新 UI 再发请求</td></tr>
+  <tr><td><strong>幂等</strong></td><td>Idempotent</td><td>执行多次，结果与一次相同</td></tr>
+  <tr><td><strong>中间件</strong></td><td>Middleware</td><td>请求处理链中的"中间环节"</td></tr>
+  <tr><td><strong>外键</strong></td><td>Foreign Key</td><td>表与表之间的关联字段</td></tr>
+  <tr><td><strong>参数化查询</strong></td><td>Parameterized Query</td><td>用 ? 占位符，防 SQL 注入</td></tr>
+</table>
+
+<hr>
+
+<div style="text-align:center;padding:30px 0 10px;color:var(--text2);font-size:14px">
+  <p><strong>最后的话</strong></p>
+  <p>TaskFlow 虽小，但涵盖了现代 Web 开发的核心模式：<br>
+  前后端分离、TypeScript 全栈、组件化、分层架构、统一错误处理……<br>
+  <strong>技术栈会变，但设计思路是永恒的。</strong></p>
+</div>
+
+</div>
+</body>
+</html>
