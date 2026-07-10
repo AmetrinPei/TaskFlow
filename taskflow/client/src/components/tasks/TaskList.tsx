@@ -79,9 +79,9 @@ export default function TaskList({
       onDrop={draggable ? handleDrop : undefined}
     >
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm text-gray-500">共 {tasks.length} 个任务</span>
+        <span className="text-sm text-gray-500 dark:text-gray-400">共 {tasks.length} 个任务</span>
         {draggable && (
-          <span className="text-xs text-gray-400 flex items-center gap-1">
+          <span className="text-xs text-gray-400 dark:text-gray-500 flex items-center gap-1">
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
             </svg>

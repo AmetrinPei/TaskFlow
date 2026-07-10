@@ -51,7 +51,7 @@ export default function CategoryForm({
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             分类名称 <span className="text-red-500">*</span>
           </label>
           <input
@@ -63,10 +63,10 @@ export default function CategoryForm({
             }}
             placeholder="请输入分类名称"
             maxLength={20}
-            className={`w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+            className={`w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 ${
               error
                 ? 'border-red-300 focus:ring-red-200'
-                : 'border-gray-200 focus:ring-primary/20 focus:border-primary'
+                : 'border-gray-200 dark:border-gray-600 focus:ring-primary/20 focus:border-primary'
             }`}
           />
           {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
@@ -76,7 +76,7 @@ export default function CategoryForm({
             type="button"
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-50"
           >
             取消
           </button>

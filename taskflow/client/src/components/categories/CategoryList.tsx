@@ -23,7 +23,7 @@ export default function CategoryList({
           className={`group flex items-center rounded-lg transition-colors ${
             activeCategoryId === cat.id
               ? 'bg-primary/10 text-primary'
-              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+              : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100'
           }`}
         >
           <button

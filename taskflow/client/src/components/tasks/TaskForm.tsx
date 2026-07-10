@@ -93,7 +93,7 @@ export default function TaskForm({
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Title */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             标题 <span className="text-red-500">*</span>
           </label>
           <input
@@ -104,10 +104,10 @@ export default function TaskForm({
               if (errors.title) setErrors({});
             }}
             placeholder="请输入任务标题"
-            className={`w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+            className={`w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 ${
               errors.title
                 ? 'border-red-300 focus:ring-red-200'
-                : 'border-gray-200 focus:ring-primary/20 focus:border-primary'
+                : 'border-gray-200 dark:border-gray-600 focus:ring-primary/20 focus:border-primary'
             }`}
           />
           {errors.title && (
@@ -117,23 +117,23 @@ export default function TaskForm({
 
         {/* Description */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">描述</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">描述</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="请输入任务描述（可选）"
             rows={3}
-            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors resize-none"
+            className="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           />
         </div>
 
         {/* Category */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">分类</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">分类</label>
           <select
             value={categoryId}
             onChange={(e) => setCategoryId(Number(e.target.value))}
-            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white transition-colors"
+            className="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors"
           >
             {categories.map((cat) => (
               <option key={cat.id} value={cat.id}>{cat.name}</option>
@@ -143,7 +143,7 @@ export default function TaskForm({
 
         {/* Priority */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">优先级</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">优先级</label>
           <div className="flex gap-4">
             {priorities.map((p) => {
               const info = PRIORITY_MAP[p];
@@ -166,12 +166,12 @@ export default function TaskForm({
 
         {/* Due Date */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">截止日期</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">截止日期</label>
           <input
             type="date"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
-            className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+            className="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
           />
         </div>
 
@@ -181,7 +181,7 @@ export default function TaskForm({
             type="button"
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-50"
           >
             取消
           </button>

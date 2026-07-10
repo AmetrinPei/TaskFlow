@@ -27,16 +27,16 @@ export default function StatusChart({ data, completionRate }: StatusChartProps) 
 
   if (data.length === 0 || data.every((d) => d.count === 0)) {
     return (
-      <div className="bg-white rounded-xl border border-gray-100 p-6">
-        <h3 className="text-sm font-semibold text-gray-900 mb-4">状态分布</h3>
-        <div className="flex items-center justify-center h-48 text-sm text-gray-400">暂无数据</div>
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-6 transition-colors">
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">状态分布</h3>
+        <div className="flex items-center justify-center h-48 text-sm text-gray-400 dark:text-gray-500">暂无数据</div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 p-6">
-      <h3 className="text-sm font-semibold text-gray-900 mb-4">状态分布</h3>
+    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-6 transition-colors">
+      <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">状态分布</h3>
       <div className="flex items-center gap-6">
         <div className="relative w-48 h-48">
           <ResponsiveContainer width="100%" height="100%">
@@ -58,16 +58,16 @@ export default function StatusChart({ data, completionRate }: StatusChartProps) 
             </PieChart>
           </ResponsiveContainer>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-2xl font-bold text-gray-900">{completionRate}%</span>
-            <span className="text-xs text-gray-500">完成率</span>
+            <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">{completionRate}%</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">完成率</span>
           </div>
         </div>
         <div className="space-y-3">
           {chartData.map((item) => (
             <div key={item.name} className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-              <span className="text-sm text-gray-600">{item.name}</span>
-              <span className="text-sm font-medium text-gray-900">{item.value}</span>
+              <span className="text-sm text-gray-600 dark:text-gray-400">{item.name}</span>
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{item.value}</span>
             </div>
           ))}
         </div>

@@ -93,7 +93,7 @@ export default function Layout({
   );
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Sidebar: 桌面端固定显示，移动端覆盖层 */}
       {isMobile ? (
         sidebarOpen && (

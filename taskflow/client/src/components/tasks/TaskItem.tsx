@@ -20,7 +20,7 @@ export default function TaskItem({ task, onToggleStatus, onEdit, onDelete, dragg
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow group ${isDone ? 'opacity-60' : ''} ${
+      className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 p-4 hover:shadow-md transition-shadow group ${isDone ? 'opacity-60' : ''} ${
         isDragOver ? 'border-t-2 border-t-primary' : ''
       }`}
       onDragOver={onDragOver ? (e) => onDragOver(e, task.id) : undefined}
@@ -30,7 +30,7 @@ export default function TaskItem({ task, onToggleStatus, onEdit, onDelete, dragg
         <div className="flex items-start gap-3 min-w-0 flex-1">
           {draggable && (
             <div
-              className="mt-0.5 cursor-grab active:cursor-grabbing text-gray-300 hover:text-gray-500 transition-colors shrink-0"
+              className="mt-0.5 cursor-grab active:cursor-grabbing text-gray-300 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 transition-colors shrink-0"
               draggable
               onDragStart={(e) => onDragStart?.(e, task.id)}
               onDragEnd={onDragEnd}
@@ -49,14 +49,14 @@ export default function TaskItem({ task, onToggleStatus, onEdit, onDelete, dragg
             <PriorityBadge priority={task.priority} />
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className={`text-sm font-medium text-gray-900 truncate ${isDone ? 'line-through' : ''}`}>
+            <h3 className={`text-sm font-medium text-gray-900 dark:text-gray-100 truncate ${isDone ? 'line-through' : ''}`}>
               {task.title}
             </h3>
             {task.description && (
-              <p className="text-xs text-gray-500 mt-0.5 truncate">{task.description}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">{task.description}</p>
             )}
             <div className="flex items-center gap-3 mt-2">
-              <span className="inline-flex items-center gap-1 text-xs text-gray-500">
+              <span className="inline-flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z" />
                 </svg>
@@ -83,7 +83,7 @@ export default function TaskItem({ task, onToggleStatus, onEdit, onDelete, dragg
           <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               onClick={() => onEdit(task)}
-              className="p-1.5 text-gray-400 hover:text-primary hover:bg-blue-50 rounded-md transition-colors"
+              className="p-1.5 text-gray-400 hover:text-primary hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-md transition-colors"
               title="编辑"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -92,7 +92,7 @@ export default function TaskItem({ task, onToggleStatus, onEdit, onDelete, dragg
             </button>
             <button
               onClick={() => onDelete(task.id)}
-              className="p-1.5 text-gray-400 hover:text-danger hover:bg-red-50 rounded-md transition-colors"
+              className="p-1.5 text-gray-400 hover:text-danger hover:bg-red-50 dark:hover:bg-red-900/30 rounded-md transition-colors"
               title="删除"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

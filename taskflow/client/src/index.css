@@ -7,6 +7,12 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #F9FAFB;
   color: #1F2937;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark body {
+  background-color: #111827;
+  color: #E5E7EB;
 }
 
 @keyframes slide-in {

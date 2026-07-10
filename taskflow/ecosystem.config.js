@@ -2,10 +2,11 @@ module.exports = {
   apps: [
     {
       name: 'taskflow',
-      script: './node_modules/tsx/dist/cli.mjs',
+      script: 'node_modules/tsx/dist/cli.mjs',
       args: 'src/index.ts',
-      cwd: './server',
+      cwd: 'd:/workspace/task/Qoder/taskflow/server',
       interpreter: 'node',
+      exec_mode: 'fork',
       instances: 1,
       autorestart: true,
       watch: false,

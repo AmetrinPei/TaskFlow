@@ -22,7 +22,7 @@ export default function StatsPage() {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <div className="text-red-500 text-4xl mb-4">⚠</div>
-        <p className="text-gray-600 mb-4">{error || '统计数据加载失败'}</p>
+        <p className="text-gray-600 dark:text-gray-400 mb-4">{error || '统计数据加载失败'}</p>
         <div className="flex gap-3">
           <button
             onClick={fetchStats}
@@ -32,7 +32,7 @@ export default function StatsPage() {
           </button>
           <button
             onClick={() => navigate('/')}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
             返回任务列表
           </button>
@@ -44,10 +44,10 @@ export default function StatsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-900">统计面板</h2>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">统计面板</h2>
         <button
           onClick={() => navigate('/')}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+          className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
         >
           返回任务列表
         </button>

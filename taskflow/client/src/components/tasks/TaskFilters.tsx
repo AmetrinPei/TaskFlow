@@ -21,15 +21,15 @@ export default function TaskFilters({
   return (
     <div className="flex items-center justify-between mb-4">
       {/* Status tabs */}
-      <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+      <div className="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
         {STATUS_OPTIONS.map((opt) => (
           <button
             key={opt.value}
             onClick={() => onStatusChange(opt.value)}
             className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
               activeStatus === opt.value
-                ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-500 hover:text-gray-700'
+                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
             }`}
           >
             {opt.label}
@@ -44,7 +44,7 @@ export default function TaskFilters({
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value, sortOrder)}
-            className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-white text-gray-600 focus:outline-none focus:ring-2 focus:ring-primary/20"
+            className="text-xs border border-gray-200 dark:border-gray-600 rounded-lg px-2 py-1.5 bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/20"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -52,7 +52,7 @@ export default function TaskFilters({
           </select>
           <button
             onClick={() => onSortChange(sortBy, sortOrder === 'asc' ? 'desc' : 'asc')}
-            className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
+            className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
             title={sortOrder === 'asc' ? '升序' : '降序'}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

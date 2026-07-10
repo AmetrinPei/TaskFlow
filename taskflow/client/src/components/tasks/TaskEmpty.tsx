@@ -6,7 +6,7 @@ interface TaskEmptyProps {
 export default function TaskEmpty({ onCreateTask, hasFilters }: TaskEmptyProps) {
   return (
     <div className="flex flex-col items-center justify-center py-16">
-      <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+      <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
         <svg className="w-10 h-10 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           {hasFilters ? (
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -15,10 +15,10 @@ export default function TaskEmpty({ onCreateTask, hasFilters }: TaskEmptyProps) 
           )}
         </svg>
       </div>
-      <h3 className="text-lg font-medium text-gray-900 mb-1">
+      <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-1">
         {hasFilters ? '无匹配结果' : '暂无任务'}
       </h3>
-      <p className="text-sm text-gray-500 mb-6">
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
         {hasFilters ? '尝试调整筛选条件或清空搜索关键词' : '点击下方按钮创建你的第一个任务'}
       </p>
       {!hasFilters && (

@@ -6,9 +6,71 @@
 删除服务	pm2 delete taskflow
 实时监控	pm2 monit
 
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+cd d:\workspace\task\Qoder\taskflow
+npm run dev
+
 服务已经成功启动了！两个服务都在运行：
 后端：http://localhost:3001 ✅
 前端：http://localhost:5173 ✅
 你现在可以在浏览器中访问 http://localhost:3001 或 http://localhost:5173 来使用 TaskFlow。
 
 提示：关闭 PowerShell 窗口后 PM2 进程仍会运行。但重新开机后需要重新执行 pm2 start ecosystem.config.js。如需开机自启，可执行 pm2 startup 和 pm2 save。
+
+
+以下是日常开发中与 GitHub 交互的常用命令：
+
+### 推送代码到 GitHub
+
+```bash
+# 每次修改后
+git add .                          # 暂存所有改动
+git commit -m "描述这次改了什么"      # 提交
+git push                           # 推送到 GitHub
+```
+
+### 查看改动状态
+
+```bash
+git status                         # 查看哪些文件被修改了
+git diff                           # 查看具体改了什么
+git log --oneline                  # 查看提交历史
+```
+
+### 多设备同步
+
+如果你在另一台电脑上开发：
+
+```bash
+git pull                           # 拉取 GitHub 上的最新代码
+```
+
+### 分支管理（进阶）
+
+```bash
+git branch feature-暗色模式           # 创建新功能分支
+git checkout feature-暗色模式         # 切换到该分支
+# ... 开发完成后 ...
+git checkout main                  # 切回主分支
+git merge feature-暗色模式            # 合并分支
+git push                           # 推送
+```
+
+### 常用工作流总结
+
+| 场景 | 命令 |
+|------|------|
+| **日常提交** | `git add .` → `git commit -m "..."` → `git push` |
+| **换电脑继续开发** | `git clone https://github.com/AmetrinPei/TaskFlow.git` |
+| **拉取远程更新** | `git pull` |
+| **回退上一次提交** | `git reset --soft HEAD~1` |
+| **查看历史** | `git log --oneline -10` |
+
+### 小技巧
+
+- **commit message 建议用有意义的描述**，比如：
+  - `feat: 添加暗色模式支持`
+  - `fix: 修复任务列表排序错误`
+  - `docs: 更新 README 部署说明`
+- **养成小步提交的习惯**，每完成一个小功能就 commit 一次，方便回退和追溯
+- 如果不想每次都输入密码，可以配置 SSH 密钥或 Git Credential Manager（安装 Git 时默认已启用）

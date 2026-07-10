@@ -12,7 +12,7 @@ if (NODE_ENV === 'production') {
   app.use(express.static(clientDist));
 
   // 所有非 /api 的请求返回 index.html（支持前端路由）
-  app.get('*', (req, res) => {
+  app.get('/{*path}', (req, res) => {
     res.sendFile(path.join(clientDist, 'index.html'));
   });
 }

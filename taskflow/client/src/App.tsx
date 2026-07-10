@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout';
 import TaskPage from './pages/TaskPage';
 import StatsPage from './pages/StatsPage';
 import { ToastProvider, useToast } from './components/common/Toast';
+import { ThemeProvider } from './contexts/ThemeContext';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import { useCategories } from './hooks/useCategories';
 import { useTasks } from './hooks/useTasks';
@@ -119,11 +120,13 @@ function AppRoutes() {
 function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
-        <ToastProvider>
-          <AppRoutes />
-        </ToastProvider>
-      </BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
+          <ToastProvider>
+            <AppRoutes />
+          </ToastProvider>
+        </BrowserRouter>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }

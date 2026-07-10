@@ -10,9 +10,9 @@ const COLORS = ['#3B82F6', '#8B5CF6', '#EC4899', '#F59E0B', '#10B981', '#6366F1'
 export default function CategoryChart({ data }: CategoryChartProps) {
   if (data.length === 0 || data.every((d) => d.count === 0)) {
     return (
-      <div className="bg-white rounded-xl border border-gray-100 p-6">
-        <h3 className="text-sm font-semibold text-gray-900 mb-4">分类分布</h3>
-        <div className="flex items-center justify-center h-48 text-sm text-gray-400">暂无数据</div>
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-6 transition-colors">
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">分类分布</h3>
+        <div className="flex items-center justify-center h-48 text-sm text-gray-400 dark:text-gray-500">暂无数据</div>
       </div>
     );
   }
@@ -23,8 +23,8 @@ export default function CategoryChart({ data }: CategoryChartProps) {
   }));
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 p-6">
-      <h3 className="text-sm font-semibold text-gray-900 mb-4">分类分布</h3>
+    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-6 transition-colors">
+      <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">分类分布</h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData} layout="vertical" margin={{ left: 20, right: 20 }}>
